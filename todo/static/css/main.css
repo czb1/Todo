@@ -4,6 +4,7 @@
 }
 
 html {
+    zoom: 200%;
     font-size: 25px;
     min-height: 100vh;
 }
