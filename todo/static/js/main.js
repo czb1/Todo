@@ -311,6 +311,11 @@ function editbt3(){
     document.getElementById("edittodopage").style["zIndex"]="-100"
 }
 
+window.ontouchstart = function(e) {
+    e.preventDefault();
+    };
+
+
 window.onload = function(){
     document.oncontextmenu = function(){
         event.returnValue = false;
