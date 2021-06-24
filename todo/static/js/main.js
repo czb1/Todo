@@ -312,6 +312,9 @@ function editbt3(){
 }
 
 window.onload = function(){
+    document.oncontextmenu = function(){
+        event.returnValue = false;
+    }
     
     model.init(function(){
         update();
