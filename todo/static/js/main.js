@@ -113,7 +113,7 @@ function addt(todo,todoIndex,todoList){
     todoGroup.appendChild(todog);
     todoGroup.appendChild(timg);
     edittodo(textP,todoIndex,todo.content);
-    tig(timg,todoIndex);
+    tig(timg,todoIndex,todo.content);
     todoList.insertBefore(todoGroup, todoList.firstElementChild);
 
 }
@@ -144,14 +144,14 @@ function upcount(activeNum){
 
 }
 
-function tig(elem, index) {
-    elem.addEventListener('touchend', function (event) {
-            elem.parentNode.removeChild(elem);
-            model.data.todos.splice(index, 1);
-            model.flush();
-            update();
-    })
-}
+// function tig(elem, index) {
+//     elem.addEventListener('touchend', function (event) {
+//             elem.parentNode.removeChild(elem);
+//             model.data.todos.splice(index, 1);
+//             model.flush();
+//             update();
+//     })
+// }
 let editcontent='';
 function edittodo(elem, index,content){
     elem.addEventListener('touchend', function (event) {
@@ -161,6 +161,41 @@ function edittodo(elem, index,content){
         
     })
 }
+
+
+function tig(elem, index,conent) {
+    var longtouch_interval=500;
+    let touchStartTimer, touchEndTimer;
+    elem.addEventListener('touchstart', function (event) {
+        touchStartTimer = new Date();
+    });
+    elem.addEventListener('touchend', function (event) {
+        event.preventDefault();
+        touchEndTimer = new Date();
+        let deltaTime = touchEndTimer.getTime() - touchStartTimer.getTime();
+        if(deltaTime > longtouch_interval){
+            model.data.todos.forEach((todo, todoIndex) => {
+                if(todo.content==conent){
+                    todo.completed=!todo.completed;
+                    model.flush();          
+                    update();
+                }
+    
+            })
+
+        }
+        else{
+            elem.parentNode.removeChild(elem);
+            model.data.todos.splice(index, 1);
+            model.flush();          
+            update();
+        }
+    })
+    
+}
+
+
+
 
 
 (function(){
